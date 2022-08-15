@@ -1,5 +1,5 @@
 clear;
-[retVal] = readDCA1000_1('E:\雷达数据\wr1.bin');
+[retVal] = readDCA1000_1('./demo.bin');
 global numChirps;
 global numADCSamples;%采样点数
 RX1data = reshape(retVal(1,:),numADCSamples,numChirps);   %RX1数据
@@ -22,7 +22,7 @@ N=1024;        %FFT点数
 %加海明窗
 range_win = hamming(numADCSamples); %生成海明窗
 for k=1:1:frame
-    din_win(:,k)=RX2data(:,2*k-1).*range_win; %对信号做Range-fft
+    din_win(:,k)=RX1data(:,2*k-1).*range_win; %对信号做Range-fft
     datafft(:,k)=fft(din_win(:,k));
 end
 
@@ -78,7 +78,7 @@ vital_sign=phaseUsedComputation;
 vital_sign=filter(bpf_vitalsign,vital_sign);
 
 %VMD参数设置
-alpha = 6000;      % moderate bandwidth constraint
+alpha = 5000;      % moderate bandwidth constraint
 tau = 0;            % noise-tolerance (no strict fidelity enforcement)0
 K = 3;              % modes
 DC = 0;             % no DC part imposed
@@ -158,27 +158,10 @@ vital_sign=filter(bpf_heart,u(2,:))+filter(bpf_breathe,u(1,:));
 
 %生命体征信号时域图
 figure(1);
-plot(index,vital_sign,'-k', 'LineWidth', 1.2);
+plot(index,vital_sign);
 xlabel('Time(s)','FontWeight','bold');
 ylabel('Amplitude','FontWeight','bold');
 title('心肺信号','FontWeight','bold');
-
-%移除坐标轴边框
-set(gca, 'Visible', 'off');
-%设置背景为白色
-set(gcf, 'color', 'w');
-
-% dataset = (vital_sign(1:end)-min(vital_sign))/(max(vital_sign)-min(vital_sign));
-% figure(8);
-% for i = 1:318
-%     img = plot(index(1:80),dataset(i:(i+79)),'-k');
-%     ylim([0,1]);
-%     %移除坐标轴边框
-%     set(gca, 'Visible', 'off');
-%     %设置背景为白色
-%     set(gcf, 'color', 'w');
-%     saveas(gcf, ['E:\pythonProject\pyTorch\identity authentication\deep_learning\dataset\wr\', num2str(i+318), '.jpg']);
-% end
 
 %生命体征信号频域图
 figure(2);
