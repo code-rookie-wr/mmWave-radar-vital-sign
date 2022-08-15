@@ -1,5 +1,6 @@
+% 该文件绘制了I/Q两路的信号以及取模后的信号
 clear;
-[retVal] = readDCA1000_1('E:\ti\mmwave_studio_02_01_01_00\mmWaveStudio\PostProc\adc_data.bin');
+[retVal] = readDCA1000_1('./demo.bin');
 global numChirps;
 global numADCSamples;%采样点数
 RX1data = reshape(retVal(1,:),numADCSamples,numChirps);   %RX1数据

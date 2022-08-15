@@ -1,5 +1,6 @@
+% 此文件用于对于长时间呼吸速率以及心率的检测，此demo仅有20s数据，这里仅供参考
 clear;
-[retVal] = readDCA1000_1('E:\ti\mmwave_studio_02_01_01_00\mmWaveStudio\PostProc\adc_data.bin');
+[retVal] = readDCA1000_1('./demo.bin');
 global numChirps;
 global numADCSamples;%采样点数
 RX1data = reshape(retVal(1,:),numADCSamples,numChirps);   %RX1数据
@@ -8,14 +9,14 @@ RX3data = reshape(retVal(3,:),numADCSamples,numChirps);   %RX3
 RX4data = reshape(retVal(4,:),numADCSamples,numChirps);   %RX4
 
 c=3.0e8;  
-slope=59.997e12; %调频斜率
+slope=60e12; %调频斜率
 Tc=50e-6;      %chirp周期
 B=slope*Tc;    %调频带宽
 Fs=4e6;        %采样率
 f0=60.36e9;    %初始频率
 lambda=c/f0;   %雷达信号波长
 d=lambda/2;    %天线阵列间距
-frame=2000;     %帧数
+frame=400;     %帧数
 Tf=0.05;       %帧周期
 N=1024;        %FFT点数
 

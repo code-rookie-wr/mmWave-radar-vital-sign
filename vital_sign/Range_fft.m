@@ -1,5 +1,5 @@
 clear;
-[retVal] = readDCA1000_1('E:\雷达数据\wr2.bin');
+[retVal] = readDCA1000_1('./demo.bin');
 global numChirps;
 global numADCSamples;%采样点数
 RX1data = reshape(retVal(1,:),numADCSamples,numChirps);   %RX1数据
